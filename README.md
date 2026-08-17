@@ -99,3 +99,8 @@ downstream notebook reads them back in.
 
 `07_NCQE_XS_Extraction_Plotting.ipynb` saves the final cross section result
 plot to `plots/NCQE_XS.png`.
+
+
+## AI Disclaimer
+
+All script and analysis infrastructure is my own. Claude was used to organize the analysis scripts to aid in documentation / reproducibility.  
