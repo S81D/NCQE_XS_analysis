@@ -1,4 +1,4 @@
-# NCQE_XS_analysis (powered by Claude AI)
+# NCQE_XS_analysis (README powered by Claude AI)
 
 Analysis notebooks for extracting the NCQE (neutral-current quasi-elastic)
 cross section using the ANNIE experiment. Inputs are
