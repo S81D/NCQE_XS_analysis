@@ -1,0 +1,14 @@
+# OS / editor junk
+.DS_Store
+.ipynb_checkpoints/
+__pycache__/
+*.pyc
+
+# Plot outputs: not yet blessed by the collaboration, kept out of the
+# public repo. Directory structure is preserved via .gitkeep files;
+# notebooks recreate these folders at runtime (os.system('mkdir -p ...')).
+plots/**/*.png
+plots/**/*.pdf
+plots/**/*.jpg
+plots/**/*.jpeg
+!plots/**/.gitkeep
