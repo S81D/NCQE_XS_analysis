@@ -88,30 +88,6 @@ running:
 All `lib/*.csv` and `lib/*.py` references are repo-internal and need no
 changes.
 
-## Proposed: centralizing these paths
-
-The paths above are currently duplicated inline across 4-5 notebooks. A
-low-risk way to centralize them: `lib/paths_template.py` in this repo is a
-**proposed, not-yet-wired-in** template collecting all of the above into
-one file. To adopt it:
-
-1. Rename `lib/paths_template.py` → `lib/paths.py` and fill in your own
-   staged directories.
-2. In each notebook, replace the inline assignment with an import, e.g.
-   in `03_CCinc_Sideband.ipynb`:
-   ```python
-   # before
-   MC_directory = '../MC_GENIE-O16/'
-   # after
-   from lib.paths import MC_DIRECTORY as MC_directory
-   ```
-3. Repeat for `DATA_DIRECTORY`, `OFFBEAM_DIRECTORY`, `SKYSHINE_FILES`, and
-   `DEXCITATION_MC_FILE` wherever they're used (see table above for which
-   notebooks use which).
-
-This wasn't applied automatically since it touches the notebooks
-themselves — happy to make these specific edits on request.
-
 ## Outputs
 
 `05_FULL_DATA_signal_band.ipynb` exports `Base_GENIE.root` and
