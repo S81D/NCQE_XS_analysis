@@ -4,11 +4,18 @@
 __pycache__/
 *.pyc
 
-# Plot outputs: not yet blessed by the collaboration, kept out of the
-# public repo. Directory structure is preserved via .gitkeep files;
-# notebooks recreate these folders at runtime (os.system('mkdir -p ...')).
+# Plot outputs (images and derived tables): not yet blessed by the
+# collaboration, kept out of the public repo. Directory structure is
+# preserved via .gitkeep files; notebooks recreate these folders at
+# runtime (os.system('mkdir -p ...') / os.makedirs).
 plots/**/*.png
 plots/**/*.pdf
 plots/**/*.jpg
 plots/**/*.jpeg
+plots/**/*.csv
+plots/**/*.tex
 !plots/**/.gitkeep
+
+# Personal reference/scratch notes (thesis text excerpts, ad-hoc code
+# snippets) -- not read by any script, not repo documentation.
+descr/
