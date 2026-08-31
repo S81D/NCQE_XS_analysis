@@ -1,4 +1,4 @@
-# NCQE_XS_analysis
+# NCQE_XS_analysis (README powered by Claude AI)
 
 Analysis notebooks for extracting the NCQE (neutral-current quasi-elastic)
 cross section using the ANNIE experiment. Inputs are
@@ -9,25 +9,23 @@ below).
 
 ## Pipeline / run order
 
-Run the notebooks in this order. Steps 1-7 are each self-contained
-(imports from `lib/`, scan the raw ntuples directly) but reuse numbers
-that earlier steps print out, copied in by hand — see each notebook's
-final cell(s) for the values to carry forward. Steps 8-9 are appendix/QC
-notebooks that can be run any time afterward; step 9 is the only one that
-reads another step's output file directly (`Base_GENIE.root` /
-`Empirical_GENIE.root`, exported by step 5).
+Run notebooks 1-7 in order. Each is self-contained (imports from `lib/`,
+scans the raw ntuples directly) but later steps reuse numbers that
+earlier steps print out, copied in by hand — see each notebook's final
+cell(s) for the values to carry forward. The two additional (unnumbered)
+scripts below are appendix/QC utilities you can run any time afterward.
 
 | # | Notebook | What it does |
 |---|---|---|
 | 1 | [`01_Bunch_Fitting_Data.ipynb`](01_Bunch_Fitting_Data.ipynb) | Fits bunch-timing centers/widths from on-beam **data** CC-inclusive events, for the NC/CC bunch-structure mapping used to boost NC purity. |
 | 2 | [`02_Bunch_Fitting_MC.ipynb`](02_Bunch_Fitting_MC.ipynb) | Same bunch-timing fit, run on **MC** (CC-tagged sample), to compare/derive the MC-side bunch structure. |
 | 3 | [`03_CCinc_Sideband.ipynb`](03_CCinc_Sideband.ipynb) | Dirt (out-of-tank) sideband using CC muons; derives the dirt-background scale factor (`ALPHA_SCALING`, currently 0.27 in `lib/constants.py`). |
-| 4 | [`04_Skyshine_Sideband.ipynb`](04_Skyshine_Sideband.ipynb) | Sideband analysis of the "skyshine" (cosmogenic/atmospheric) background, using the >2-sigma bunch-timing region; derives the expected skyshine rate in the signal region. |
+| 4 | [`04_Skyshine_Sideband.ipynb`](04_Skyshine_Sideband.ipynb) | Sideband analysis of the "skyshine" neutron background, using the >2-sigma bunch-timing region; derives the expected skyshine rate in the signal region. |
 | 5 | [`05_FULL_DATA_signal_band.ipynb`](05_FULL_DATA_signal_band.ipynb) | Main signal-region analysis: reconstructs data and MC (by category) event rates inside the 1-sigma bunch window across the full data/MC statistics; exports `Base_GENIE.root` / `Empirical_GENIE.root`. |
 | 6 | [`06_Primary_Dexcitation_Systematic.ipynb`](06_Primary_Dexcitation_Systematic.ipynb) | Systematic study of the primary de-excitation gamma-ray uncertainty — these gammas are the NCQE signal itself. |
 | 7 | [`07_NCQE_XS_Extraction_Plotting.ipynb`](07_NCQE_XS_Extraction_Plotting.ipynb) | Combines the counts/rates from steps 3-6 (entered by hand, see its "INPUTS" cell) into the final 1D NCQE cross section, the full systematic uncertainty budget (flux, GENIE xsec, MC stat, skyshine, dirt, primary/secondary de-excitation, DV, POT), and the official result plot (`plots/NCQE_XS.png`), for use alongside `xsec_analyzer`. |
-| 8 | [`08_Waterfall_Plot.ipynb`](08_Waterfall_Plot.ipynb) | Appendix/QC step: re-derives event counts at every selection stage (clusterization through the final 1/3-spill cut) directly from the raw MC/data/off-beam/skyshine ntuples, and assembles the event-selection waterfall table (efficiency, MC purity, data purity per stage) plus its plot, for Base and Empirical GENIE. Exports table CSVs/LaTeX locally (see "Plots" note below — not committed). |
-| 9 | [`09_plot_base_vs_empirical.py`](09_plot_base_vs_empirical.py) | Appendix/QC step: reads `Base_GENIE.root` / `Empirical_GENIE.root` back in (rather than re-scanning raw ntuples) to make Base-vs-Empirical GENIE model comparison plots, into `plots/comparison/`. Run any time after step 5 has been run once per GENIE tune. |
+| (extra) | [`Waterfall_Plot.ipynb`](Waterfall_Plot.ipynb) | Re-derives event counts at every selection stage (clusterization through the final 1/3-spill cut) directly from the raw MC/data/off-beam/skyshine ntuples, and assembles the event-selection waterfall table (efficiency, MC purity, data purity per stage) plus its plot, for Base and Empirical GENIE. |
+| (extra) | [`plot_base_vs_empirical.py`](plot_base_vs_empirical.py) | Additional script to plot the PMT observables for both Base + Empirical model GENIE using the exported root files.|
 
 ## Repository layout
 
@@ -40,23 +38,22 @@ NCQE_XS_analysis/
 ├── 05_FULL_DATA_signal_band.ipynb
 ├── 06_Primary_Dexcitation_Systematic.ipynb
 ├── 07_NCQE_XS_Extraction_Plotting.ipynb
-├── 08_Waterfall_Plot.ipynb
-├── 09_plot_base_vs_empirical.py
 ├── Base_GENIE.root            # exported by 05, Base GENIE model event branches
 ├── Empirical_GENIE.root       # exported by 05, Empirical GENIE model event branches
+├── (extra) Waterfall_Plot.ipynb        # event-selection waterfall table/plot
+├── (extra) plot_base_vs_empirical.py   # uses the exported root files
 ├── lib/
 │   ├── constants.py           # tank/FV geometry, bunch-timing constants, derived scale factors
 │   ├── imports.py             # shared package imports + matplotlib style
 │   ├── reco_functions.py      # reco energy, bunch cutting, direction/FV helper functions
-│   ├── paths_template.py      # proposed (not yet wired-in) central data-path config, see below
+│   ├── paths_template.py      # unused proposal for centralizing the local data paths below, not wired into any script
 │   ├── POT_trigger_FY22_23_summary.csv   # per-run trigger counts / POT for on-beam data
-│   ├── offbeam_summary.csv               # per-run trigger counts for off-beam data
-│   └── FullTankPMTGeometry.csv           # tank PMT geometry; not currently read by any pipeline script, kept for reference/future geometry plotting
+│   └── offbeam_summary.csv               # per-run trigger counts for off-beam data
 └── plots/                      # output directories only -- see note below
     ├── bunch_timing/
     ├── bunch_timing/MC/
     ├── sidebands/
-    └── comparison/             # written by 09_plot_base_vs_empirical.py
+    └── comparison/             # written by plot_base_vs_empirical.py
 ```
 
 All notebooks assume the default Jupyter behavior of running with the
@@ -67,7 +64,7 @@ without also updating those paths).
 
 **Plots:** figures generated by these notebooks are not included in this
 repository — they haven't been blessed by the collaboration yet. The same
-applies to the derived table exports from step 8
+applies to the derived table exports from `Waterfall_Plot.ipynb`
 (`NCQE_waterfall_counts*.csv`, `NCQE_waterfall_table*.tex`) — excluded for
 now alongside the images. The `plots/` subdirectories above are kept as
 empty placeholders (via `.gitkeep`) so the expected output layout is
@@ -94,34 +91,10 @@ running:
 | `04_Skyshine_Sideband.ipynb` | `skyshine_file_names` | `['../../skyshine_100k_no_ext_clusters.root', ..._2.root, ..._3.root]` | Simulated skyshine MC samples. |
 | `05_FULL_DATA_signal_band.ipynb` | `MC_directory`, `data_directory`, `offbeam_directory`, `skyshine_file_names` | same as steps 3-4 | same as steps 3-4 |
 | `06_Primary_Dexcitation_Systematic.ipynb` | `file_name` | `'../GENIE-Empirical-4.417e20-ntuple_dirt_downsampled.root'` | Any aggregate MC sample with follower gamma-ray information (files processed through `xsec_analyzer` are easiest to pair cluster:event). |
-| `08_Waterfall_Plot.ipynb` | `MC_directory`, `data_directory`, `offbeam_directory`, `skyshine_file_names` | same as steps 3-5 | same as steps 3-5. **Note:** `MC_directory`'s inline comment (`# or 'MC_GENIE-Base/'`) is stale — the value is already `'MC_GENIE-Base/'`, the comment should read `'MC_GENIE-O16/'` as the alternative. |
+| `Waterfall_Plot.ipynb` | `MC_directory`, `data_directory`, `offbeam_directory`, `skyshine_file_names` | same as steps 3-5 | same as steps 3-5. **Note:** `MC_directory`'s inline comment (`# or 'MC_GENIE-Base/'`) is stale — the value is already `'MC_GENIE-Base/'`, the comment should read `'MC_GENIE-O16/'` as the alternative. |
 
 All `lib/*.csv` and `lib/*.py` references are repo-internal and need no
 changes.
-
-## Proposed: centralizing these paths
-
-The paths above are currently duplicated inline across 4-5 notebooks. A
-low-risk way to centralize them: `lib/paths_template.py` in this repo is a
-**proposed, not-yet-wired-in** template collecting all of the above into
-one file. To adopt it:
-
-1. Rename `lib/paths_template.py` → `lib/paths.py` and fill in your own
-   staged directories.
-2. In each notebook, replace the inline assignment with an import, e.g.
-   in `03_CCinc_Sideband.ipynb`:
-   ```python
-   # before
-   MC_directory = '../MC_GENIE-O16/'
-   # after
-   from lib.paths import MC_DIRECTORY as MC_directory
-   ```
-3. Repeat for `DATA_DIRECTORY`, `OFFBEAM_DIRECTORY`, `SKYSHINE_FILES`, and
-   `DEXCITATION_MC_FILE` wherever they're used (see table above for which
-   notebooks use which).
-
-This wasn't applied automatically since it touches the notebooks
-themselves — happy to make these specific edits on request.
 
 ## Outputs
 
@@ -130,10 +103,13 @@ themselves — happy to make these specific edits on request.
 vertex/CV position, bunch/delta timing, GENIE weights) per event category,
 one file per GENIE tune, written via `uproot.recreate`. These are kept in
 the repository as small (~330 KB) reference/comparison artifacts;
-`09_plot_base_vs_empirical.py` reads both back in for the Base-vs-Empirical
+`plot_base_vs_empirical.py` reads both back in for the Base-vs-Empirical
 comparison plots.
 
 `07_NCQE_XS_Extraction_Plotting.ipynb` saves the final cross section result
-plot to `plots/NCQE_XS.png` — same "not included until blessed by the
-collaboration" treatment as the rest of `plots/` (see above), so this
-image is excluded via `.gitignore` too.
+plot to `plots/NCQE_XS.png`.
+
+
+## AI Disclaimer
+
+All script and analysis infrastructure is my own. Claude was used to organize the analysis scripts to aid in documentation / reproducibility.
