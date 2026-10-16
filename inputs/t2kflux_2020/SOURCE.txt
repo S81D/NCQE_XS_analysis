@@ -1,0 +1,6 @@
+T2K 2020 public flux release (T2K internal version 13av7.1, NA61/SHINE 2009 replica-target tuned), no oscillations.
+Downloaded 2026-10-09 from https://t2k-experiment.org/results/neutrino-beam-flux-prediction-2020/
+  (archive https://t2k-experiment.org/wp-content/uploads/T2Kflux2020.gz); copied unchanged: README.pdf and the SK
+  +250 kA (FHC, neutrino mode) text tables, "runcond" (Run 1-10 measured beam conditions; README: use for comparisons
+  with published T2K measurements) and "nominal".
+Units: flux per 50 MeV per 1e21 POT, on variable-width bins (README).

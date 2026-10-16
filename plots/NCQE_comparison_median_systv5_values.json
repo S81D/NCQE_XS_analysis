@@ -1,0 +1,55 @@
+{
+ "placement": "median",
+ "plotted_x": 0.6948875208944952,
+ "x_err": [
+  [
+   0.3655426589755097
+  ],
+  [
+   0.45635365373377346
+  ]
+ ],
+ "x_semidev": [
+  0.3666496761661842,
+  0.5947671597651971
+ ],
+ "median_energy": 0.675,
+ "E_lower": 0.32500000000000007,
+ "E_upper": 1.1750000000000003,
+ "mean_energy": 0.7612305070152329,
+ "genie_flux_avg": 2.051255468163249,
+ "genie_spline_x_fv": 2.100250368973907,
+ "neut_gs": 2.034285092984911,
+ "neut_fv": 2.1093446593009713,
+ "data": 2.9954647310310074,
+ "stat": 0.19452948601069164,
+ "err_up": 0.76349100816275,
+ "err_down": 0.7786838465799462,
+ "base": 2.2844501937912955,
+ "t2k": {
+  "val": 1.7,
+  "err_down": 0.42,
+  "err_up": 0.54,
+  "stat": 0.17,
+  "x": 0.6066867455093025,
+  "x_lo": 0.39374291681030404,
+  "x_hi": 0.8888262495308048
+ },
+ "provenance": {
+  "date": "2026-10-15T11:05:29",
+  "python": "3.14.6",
+  "platform": "Linux-6.12.76-linuxkit-aarch64-with-glibc2.39",
+  "numpy": "2.5.1",
+  "uproot": "5.7.5",
+  "awkward": "2.10.0",
+  "scipy": "1.18.0",
+  "git_branch": "adopted-extraction",
+  "git_commit": "6f144c4",
+  "git_dirty": true,
+  "script": "09_xs_money_plot.py",
+  "budget": "/workspace/hep/ANNIE/NCQE_XS_analysis_v3/results/07_budget.json",
+  "predictions": "/workspace/hep/ANNIE/NCQE_XS_analysis_v3/inputs/xs_predictions.json",
+  "predictions_md5": "8e05aff94a0ed554399631d66dc1e19c",
+  "layout": "wide"
+ }
+}

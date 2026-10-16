@@ -1,0 +1,109 @@
+{
+ "provenance": {
+  "date": "2026-10-15T07:50:30",
+  "python": "3.14.6",
+  "platform": "Linux-6.12.76-linuxkit-aarch64-with-glibc2.39",
+  "numpy": "2.5.1",
+  "uproot": "5.7.5",
+  "awkward": "2.10.0",
+  "scipy": "1.18.0",
+  "git_branch": "adopted-extraction",
+  "git_commit": "6f144c4",
+  "git_dirty": true,
+  "notebook": "06_Primary_Dexcitation_Systematic.ipynb",
+  "mc": "/workspace/hep/ANNIE/NCQE-GENIE-samples/MC_GENIE-O16/",
+  "inputs": "results/08_systematics.json"
+ },
+ "selected": {
+  "FV": 262,
+  "OOFV_nu": 241,
+  "truth_FV": 19442,
+  "categories_FV": {
+   "cat1": 197,
+   "cat2": 6,
+   "cat3": 3,
+   "cat4": 56
+  },
+  "categories_OOFV": {
+   "cat1": 168,
+   "cat2": 14,
+   "cat3": 11,
+   "cat4": 48
+  }
+ },
+ "nuisances": {
+  "p": {
+   "more_gammas": -3.1633440299783886,
+   "fewer_gammas": 10.896201477170916
+  },
+  "s_mid": {
+   "more_gammas": -0.8662833742338828,
+   "fewer_gammas": 0.710854023350862
+  },
+  "s_hi": {
+   "more_gammas": -0.5624661431261717,
+   "fewer_gammas": 0.6521814504176174
+  },
+  "s_norm": {
+   "more_gammas": -1.2563800549666426,
+   "fewer_gammas": 1.2887635924284693
+  }
+ },
+ "p_shell": [
+  10.896201477170916,
+  3.1633440299783886
+ ],
+ "s_shell": [
+  1.6098340547870356,
+  1.6264396358780908
+ ],
+ "others": -15.226783148462374,
+ "others_mc_stat": 1.9740311860635402,
+ "primary_total": [
+  11.014480120053499,
+  15.636718849920301
+ ],
+ "cross_checks": {
+  "v2_configuration": {
+   "p_shell": [
+    17.246371351527408,
+    5.005928420523226
+   ],
+   "s_shell": [
+    2.66935636274286,
+    2.664624199724504
+   ],
+   "others": -24.515238582462583
+  },
+  "p_shell_exact_population": [
+   9.234201151518718,
+   -2.7337026004802034
+  ],
+  "populations": {
+   "proton": {
+    "simulated": [
+     61.44816123000208,
+     29.773530022854768,
+     8.778308747143154
+    ],
+    "table_II": [
+     61.699999999999996,
+     29.7,
+     8.7
+    ]
+   },
+   "neutron": {
+    "simulated": [
+     61.82762836185819,
+     29.64547677261614,
+     8.526894865525673
+    ],
+    "table_II": [
+     61.5,
+     29.8,
+     8.7
+    ]
+   }
+  }
+ }
+}

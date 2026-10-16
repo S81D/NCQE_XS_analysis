@@ -1,0 +1,4 @@
+T2K 2013 public flux release (PRD 87, 012001), basis of the 2014 NCQE analysis (PRD 90, 072012; Run 1-3), no oscillations.
+Downloaded 2026-10-09 from https://zenodo.org/records/5734212 (T2Kflux2013.tar, MD5 79b0c48b45bbfcfa366612f246eb4a2e);
+copied unchanged: README.pdf and the SK text tables for 250 kA and 205 kA horn operation.
+Units: flux per 50 MeV per 1e21 POT; 50 MeV bins to 10 GeV, 1 GeV bins above (normalised per 50 MeV).

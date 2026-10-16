@@ -7,6 +7,89 @@ data, off-beam data, and GENIE MC) staged locally by the user — none of
 those files are included in this repository (see "Paths you must edit"
 below).
 
+## v3: adopted extraction (2026-10-15, branch `adopted-extraction`)
+
+This copy reproduces the extraction and the uncertainty budget of the PRD draft. Notebooks 01-05 are unchanged from
+v2; 06 and 07 are modified, and `08_systematics.py` is new.
+
+**What changed in the physics (v2 → v3).**
+
+| | v2 | v3 |
+|---|---|---|
+| OOFV νNCQE (selected νNCQE with a true vertex outside the FV) | subtracted as background | scaled with *f* together with the FV signal (T2K, PRD 100, 112009, Eq. 5) |
+| Beam-uncorrelated (CIT) background | off-beam triggers, 127.44 (no FMV/MRD readout, so no veto) | pre-beam window [0,150) ns of the beam triggers: 67 × 182/150 = 81.29 (as in 03) |
+| Skyshine | 14.1 ± 13.0 (04) | refit with the pre-beam CIT: 13.95 ± 12.87 |
+| ⟨σ_GENIE⟩ | spline average 2.04334 | MC-implied *N*_true/(POT·Φ·*N*_T) = 2.0513 |
+| Statistical uncertainty | √N/N | √N_obs/(M_sig + M_OOFVν), T2K convention |
+| Interaction model / flux / MC stat. | 24.6 / 24.8 / 6.7 % (xsec_analyzer fake-data mode, OOFV νNCQE as background) | 8.6 / 10.0 / 5.2 % (paper extraction) |
+| Primary γ, *p* / *s* shell | +17.3/−5.0 % / +2.5/−2.6 % (`formula_v2`, OOFV νNCQE as background) | +10.9/−3.2 % / +1.6/−1.6 % (paper extraction) |
+| T2K-like "other" states | — | −15.2 % (one-sided) |
+
+The extraction is in `lib/extraction.py` (paper Eqs. 25–28) and is shared by 06, 07 and 08.
+
+**Run order.**
+
+```
+python3 08_systematics.py      # ~7 min cold (14 workers), ~10 s with cache/; writes results/08_systematics.json + log
+jupyter nbconvert --to notebook --execute --inplace 06_Primary_Dexcitation_Systematic.ipynb   # results/06_primary_gamma.json
+jupyter nbconvert --to notebook --execute --inplace 07_NCQE_XS_Extraction_Plotting.ipynb      # results/07_budget.json, plots/NCQE_XS.png
+python3 09_xs_money_plot.py --out plots/NCQE_comparison_median_column.png   # paper figure (+ _values.json sidecar)
+python3 10_t2k_comparison.py   # separation from T2K: four statistical treatments + flux / NCQE-like / de-excitation variants
+```
+
+Numbers are no longer copied by hand between notebooks; 06 and 07 read the JSON files in `results/`, each of which
+records its provenance (date, git commit, software versions, input directories). Terms analysed elsewhere (secondary
+γ rays, PMT tilt, energy scale, vertex, POT) are entered by hand in 07 and flagged there.
+
+**New files.**
+
+| File | Purpose |
+|---|---|
+| `08_systematics.py` | Stage A: extraction inputs not provided by 05 (pre-beam CIT, OOFV split, true FV νNCQE, base GENIE). Stage B: skyshine refit with the pre-beam CIT and the joint (f, α) fit. Stage C: interaction model (44-knob multisim), flux, GENIE unisims, MC statistics. Stage D: bunch timing. Stage E: CIT statistics, skyshine, External. |
+| `09_xs_money_plot.py` | Paper cross-section figure (ANNIE vs GENIE, NEUT and T2K). It reads `inputs/xs_predictions.json`, `inputs/t2kflux_2020/` and the 07 budget. `--rebuild-inputs` re-derives `inputs/xs_predictions.json` from the generator outputs in `BuildEventGenerators/` (≈43 GB, not in this repository; md5 checksums are recorded). |
+| `10_t2k_comparison.py` | Separation between ANNIE and T2K (PRD 100, 112009). Statistical treatments: the paper convention, symmetrised errors, split-normal Monte Carlo, and Barlow variable-variance likelihood. Physics variants: the flux-averaging correction, the NCQE-like signal definition, and T2K-like de-excitation. Output: `results/10_t2k_comparison.json`. |
+| `inputs/` | Small tracked inputs: the reduced GENIE/NEUT predictions and FV flux (`xs_predictions.json`), and the T2K 2020/2013 public flux tables (see `SOURCE.txt`). |
+| `lib/flux_energy.py` | Flux median / percentiles / mean, one algorithm for BNB and T2K (point placement in 09). |
+| `lib/paths.py` | Input locations, relative to the `~/hep/ANNIE` layout; each can be overridden by an environment variable. |
+| `lib/selection.py` | The 05 selection, vectorised; reproduces the 05 yields exactly. |
+| `lib/extraction.py` | Paper Eq. 26 and ⟨σ_GENIE⟩; the v2 formula, kept for cross-checks only; provenance helper. |
+| `lib/reweight.py` | Pass over the 44-knob reweighting production. |
+| `lib/followers.py` | Follower-particle records for 06. |
+| `cache/` | Derived arrays, gitignored, safe to delete. |
+| `results/` | JSON hand-off between 06/08 and 07, plus logs. |
+
+**Inputs (defaults in `lib/paths.py`).**
+- `../NCQE-GENIE-samples/MC_GENIE-O16/` and `MC_GENIE-Base/`
+- `../NCQE-Data/FY22_23/`
+- `../NCQE_Paper_Box/xsec_analyzer_check/empirical_all_weights_no_downscaling/`, the 44-knob production. It holds the
+  same events as `MC_GENIE-O16`, with re-randomised spill timing; 2 of its 3884 files are empty.
+
+**Validation (2026-10-15, this branch).** Every stage of 08 prints its reference value next to the recomputed one
+(`results/08_systematics_log.txt`). A rerun from `cache/` is bit-identical; the bootstraps are seeded.
+
+| Quantity | Reproduced | Reference (paper / review) |
+|---|---|---|
+| CV selection | identical event by event to the frozen 05 selection | — |
+| Yields | 152.61 / 140.38 / 47.76 / 7.00 / 2.91 / 113.01 / 78.23 | paper Table V |
+| Data | N_obs 772, pre-beam 67 | 772, 67 |
+| f, ⟨σ_GENIE⟩, σ | f = 1.4603, ⟨σ_GENIE⟩ = 2.0513, σ = 2.9955 ± 0.1945 | 1.46, 2.05, 3.00 ± 0.19 |
+| Skyshine | 13.95 ± 12.87 | 13.95 ± 12.87 |
+| Joint fit | α = 0.347 ± 0.091, f = 1.384 | 0.347, 1.384 |
+| Interaction model / flux / MC stat. | 8.60 / 9.95 / 5.18 % | 8.6 / 10.0 / 5.2 % |
+| Same, event-level cross-check | 8.29 / 9.43 % | — |
+| Bunch timing | +12.32 / −7.39 % (narrowing −3.09 %, mirror −1.60 %) | +12.3 / −6.9 % in draft 1 (mirror) |
+| External / skyshine / CIT stat. | 5.23 / 3.01 / 2.32 % | 5.2 / 3.0 / 2.3 % |
+| Primary γ, *p* shell (06) | +10.90 / −3.16 %; v2-configuration cross-check +17.25 / −5.01 % | draft 1: +17.3 / −5.0 % |
+| "Other" states (06) | −15.23 % (±2.0 % MC stat.) | −15.3 % |
+| Base GENIE de-excitation | σ = 2.2845 (−23.7 %) | 2.28 (−24 %) |
+| Figure (09), closure | the PRD draft-1 figure (`NCQE_comparison_median_systv4_column.png`) is reproduced pixel for pixel, with all 24 plotted values identical, when 09 is given that budget (`final_uncertainties_v4.json`) | — |
+| Budget (07) | syst +24.65 / −25.17 %, total +25.49 / −26.00 %; σ = 3.00 ± 0.19 +0.74/−0.75 | draft 1: +28.1 / −25.5 % |
+
+
+**Authorship of v3 code.** The v3 library modules, `08_systematics.py` and the v3 cells of 06 and 07 were written with
+Claude (Anthropic), ported from the 2026-10 review scripts in `NCQE_Paper_Box/Working_Directory_Agent/`, under the
+author's direction. The author's own classification code in 06 is unchanged.
+
 ## Pipeline / run order
 
 Run notebooks 1-7 in order. Each is self-contained (imports from `lib/`,

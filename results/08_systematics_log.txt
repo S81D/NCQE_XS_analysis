@@ -1,0 +1,79 @@
+==============================================================================================================
+A. INPUTS OF THE ADOPTED EXTRACTION
+  [onbeam] direction cut from cache (62710 candidates)
+  MC Empirical: selection from cache (3922 files)
+  MC Base: selection from cache (3930 files)
+  data: 389 files, POT 2.572971e20, triggers 60624559; N_obs = 772 (ref 772); pre-beam [0,150) ns: 67 (ref 67) x 182/150 = 81.29 +/- 9.93
+  Empirical MC yields, first 26 bunches, POT-scaled (External x alpha = 0.27); reference = paper Table V:
+    sig           152.608   (ref  152.61)
+    OOFV_nu       140.376   (ref  140.38)
+    NCother        47.763   (ref   47.76)
+    CC              6.995   (ref    7.00)
+    nubar           2.912   (ref    2.91)
+    OOFV_other    113.007   (ref  113.01)
+    Ext            78.231   (ref   78.23)
+  true FV nuNCQE (POT-scaled): Empirical 11324.4 (raw 19442; ref 11324.4), base 11366.8; <sigma_GENIE> = 2.0513 / 2.0589 e-38 (spline average 2.04334)
+
+==============================================================================================================
+B. SIDEBANDS WITH THE PRE-BEAM CIT
+  skyshine fit (15 bins of 94.68 ns): t0 = 353.6 +/- 57.8 ns, m_data = 0.1097 +/- 0.0091, m_pred = -0.0032, a = 1.192 +/- 0.101 e-3 ns^-2, chi2/dof 11.6/12
+  skyshine in the signal region: sideband 9.46 +/- 8.73 x 1.4749 = 13.95 +/- 12.87 (ref 13.95 +/- 12.87)
+  joint fit:  signal   772 = f 292.98 + alpha 289.75 + 265.92
+              sideband 280 = f 44.85 + alpha 234.15 + 136.64   (CIT 54.74, skyshine 9.46)
+  -> f = 1.384 +/- 0.146, alpha = 0.347 +/- 0.091 (data stat.), correlation -0.78  (ref alpha 0.347)
+
+  CV: f = 1.4603 (ref 1.4603), sigma = 2.9955 +/- 0.1945 (stat, 6.49%) e-38; base GENIE de-excitation: f = 1.1095, sigma = 2.2845 e-38 (-23.7%)
+
+==============================================================================================================
+C. REWEIGHTING: INTERACTION MODEL, FLUX, UNISIMS, MC STATISTICS
+  44-knob production: from cache (3884 files)
+  production files read: 3882/3884 (skipped: MC_1775.root (unreadable: KeyInFileError), MC_3013.root (unreadable: KeyInFileError)); matched event-by-event to the CV sample: 3880
+  interaction model (44 knobs): RMS about CV  8.60% (+-0.59 from 100 universes); mean +0.34, std 8.60, 16/84%: -7.94 / +8.35   (ref 8.6)
+  flux (13 knobs):              RMS about CV  9.95% (+-0.69 from 100 universes); mean -6.13, std 7.84, 16/84%: -13.65 / +1.71   (ref 9.95)
+    mean T_u/T_CV: GENIE 0.9254, flux 1.0367
+    interaction, only signal-like (FV + OOFV nuNCQE)   varied:  1.03%
+    interaction, only NCother                          varied:  3.89%
+    interaction, only OOFV other                       varied:  5.08%
+    interaction, only CC                               varied:  0.19%
+    interaction, only nubarNCQE                        varied:  0.14%
+    interaction, only all MC backgrounds               varied:  8.75%
+    flux by knob: horncurrent 0.66, expskin 3.82, piplus 8.14, piminus 0.15, kplus 0.27, kzero 0.00, kminus 0.00, pioninexsec 1.58, pionqexsec 1.23, piontotxsec 1.00, nucleoninexsec 1.25, nucleonqexsec 3.50, nucleontotxsec 0.97
+    unisim NormNCMEC       [+100%/-100%]  -7.30 /  +7.30 %   (true FV nuNCQE rate  +0.0 /  +0.0 %)
+    unisim MaNCEL          [    +1s/-1s]  +0.01 /  +0.21 %   (true FV nuNCQE rate +30.8 / -26.5 %)
+    unisim EtaNCEL         [    +1s/-1s]  -0.36 /  +0.34 %   (true FV nuNCQE rate  +3.8 /  +3.2 %)
+    unisim MaCCQE          [    +1s/-1s]  -0.67 /  +0.71 %   (true FV nuNCQE rate  +0.0 /  +0.0 %)
+    unisim CoulombCCQE     [    +1s/-1s]  -0.21 /  -0.17 %   (true FV nuNCQE rate  +0.0 /  +0.0 %)
+    unisim RPA_CCQE        [    +1s/-1s]  -0.68 /  +0.68 %   (true FV nuNCQE rate  +0.0 /  +0.0 %)
+    unisim AxFFCCQEshape   [        1/0]  -0.22 /  -0.00 %   (true FV nuNCQE rate  +0.0 /  +0.0 %)
+    unisim VecFFCCQEshape  [        1/0]  -0.19 /  -0.00 %   (true FV nuNCQE rate  +0.0 /  +0.0 %)
+  same weights, earlier configuration (OOFV nuNCQE as background, off-beam CIT): interaction 25.10%, flux 16.26%  -> the configuration, not the arithmetic, inflated the old 24.8 / 24.6%
+  cross-check, event level on the frozen CV events (1223/1234 first-26-bunch events matched): interaction 8.29%, flux 9.43%
+  MC statistics: 5.18% (delta method; ref 5.18), bootstrap 5.18%; backgrounds 2.63, FV_signal 3.13, OOFV_nuNCQE 3.09, truth_denominator 0.71
+
+==============================================================================================================
+D. BUNCH TIMING
+  closure: N_obs 772, MC signal-like 292.98, other MC 248.91, f 1.4603
+  window shift -0.5 ns: N_data 793; relative (data only) +4.91%, common (data + MC) -2.30%, MC only -7.04%
+  window shift +0.5 ns: N_data 745; relative (data only) -6.31%, common (data + MC) +0.88%, MC only +7.50%
+  width fit (nominal; CIT + skyshine constrained to +-17.1%): best extra variance +3.75 ns^2 (1.94 ns), chi2(0) - min = 10.83 -> f_window +11.26%
+  width fit (External floated by +-28.6%; CIT + skyshine constrained to +-17.1%): best extra variance +3.75 ns^2 (1.94 ns), chi2(0) - min = 6.25 -> f_window +11.26%
+  narrowing: sigma_BRF 1.684 -> 1.443 ns (d2 = -0.754 ns^2): contraction -3.09% (budget), mirror of the equal widening -1.60% (paper draft 1)
+  bunch timing: common +0.88/-2.30, relative +4.91/-6.31, width +11.26/-3.09  ->  +12.32 / -7.39 %
+
+==============================================================================================================
+E. BACKGROUND NORMALISATION
+  CIT (pre-beam) statistics: 81.29 +/- 9.93 events -> +2.32 / -2.32 %
+  skyshine: 13.95 +/- 12.87 events -> +3.01 / -3.01 %
+  External: alpha 0.27 +/- 0.077 (|alpha_joint - alpha_CCinc|) -> +5.23 / -5.23 %
+
+==============================================================================================================
+TERMS FOR 07 (% on sigma, up / down)
+  Interaction model            + 8.60 / - 8.60
+  Flux                         + 9.95 / - 9.95
+  MC statistics                + 5.18 / - 5.18
+  Bunch timing                 +12.32 / - 7.39
+  External normalization       + 5.23 / - 5.23
+  Skyshine                     + 3.01 / - 3.01
+  Pre-beam (CIT) statistics    + 2.32 / - 2.32
+
+wrote /workspace/hep/ANNIE/NCQE_XS_analysis_v3/results/08_systematics.json [10 s]

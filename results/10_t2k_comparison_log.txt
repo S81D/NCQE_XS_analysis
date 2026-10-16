@@ -1,0 +1,13 @@
+gap 1.295; 1 sigma bars: ANNIE lower edge 2.217, T2K upper edge 2.238 -> bars overlap; linear sum of the facing bars 1.316 vs quadrature 0.946
+
+nominal (paper CV, v3 budget)                  ANNIE 2.995 +0.763/-0.779  T2K 1.700 +0.538/-0.416 | (a) 1.37  (b) 1.43  (c) 1.36  (d) 1.38 | p(a) = 0.17
+flux averages, GENIE spline: BNB FV 2.1003, T2K SK 2.1280 -> BNB / T2K = 0.9870
+flux averages, NEUT scan   : BNB FV 2.1056, T2K SK 2.0782 -> BNB / T2K = 1.0132
+  (T2K flux above 3 GeV, where the NEUT scan is held constant: 3.9 %)
+
+(e) T2K moved to the BNB flux (GENIE ratio)    ANNIE 2.995 +0.763/-0.779  T2K 1.678 +0.531/-0.411 | (a) 1.40  (b) 1.46  (c) 1.39  (d) 1.41 | p(a) = 0.16
+(f) ANNIE NCQE-like (NC 2p2h as signal)        ANNIE 3.226 +0.822/-0.839  T2K 1.700 +0.538/-0.416 | (a) 1.53  (b) 1.59  (c) 1.52  (d) 1.54 | p(a) = 0.13
+(g) ANNIE with T2K-like "other" states         ANNIE 2.539 +0.647/-0.535  T2K 1.700 +0.538/-0.416 | (a) 1.11  (b) 1.11  (c) 1.10  (d) 1.11 | p(a) = 0.27
+(g)+(e) both                                   ANNIE 2.539 +0.647/-0.535  T2K 1.678 +0.531/-0.411 | (a) 1.14  (b) 1.14  (c) 1.14  (d) 1.14 | p(a) = 0.25
+
+wrote /workspace/hep/ANNIE/NCQE_XS_analysis_v3/results/10_t2k_comparison.json
